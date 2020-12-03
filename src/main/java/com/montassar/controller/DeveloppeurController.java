@@ -5,10 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,12 +25,21 @@ public class DeveloppeurController {
 DeveloppeurService developpeurService;
 
 @RequestMapping("/showAjout")
-public String showAjout()
-{
-	return "ajoutDeveloppeur";
+public String showAjout(ModelMap modelMap)
+{	modelMap.addAttribute("developpeur", new Developpeur());
+	modelMap.addAttribute("mode", "new");
+	return "formDeveloppeur";
 }
 
 @RequestMapping("/saveDeveloppeur")
+public String saveDeveloppeur(@Valid Developpeur developpeur,BindingResult bindingResult)
+{
+if (bindingResult.hasErrors()) return "formDeveloppeur";
+developpeurService.saveDeveloppeur(developpeur);
+return "formDeveloppeur";
+}
+
+/*@RequestMapping("/saveDeveloppeur")
 public String saveDeveloppeur(@ModelAttribute("developpeur") Developpeur developpeur, 
  @RequestParam("date") String date,
  ModelMap modelMap) throws
@@ -41,8 +53,8 @@ ParseException
 Developpeur saveDeveloppeur = developpeurService.saveDeveloppeur(developpeur);
 String msg ="Developpeur ajouté avec Id "+saveDeveloppeur.getIdDeveloppeur();
 modelMap.addAttribute("msg", msg);
-return "ajoutDeveloppeur";
-}
+return "createDeveloppeur";
+}*/
 
 @RequestMapping("/listeDeveloppeurs")
 public String listeDeveloppeurs(ModelMap modelMap,
@@ -79,7 +91,8 @@ public String editerDeveloppeur(@RequestParam("id") Long id,ModelMap modelMap)
 {
 Developpeur d= developpeurService.getDeveloppeur(id);
 modelMap.addAttribute("developpeur", d);
-return "editerDeveloppeur";
+modelMap.addAttribute("mode", "edit");
+return "formDeveloppeur";
 }
 
 @RequestMapping("/updateDeveloppeur")
