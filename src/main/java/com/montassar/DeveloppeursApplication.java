@@ -24,7 +24,7 @@ public class DeveloppeursApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		/*developpeurService.saveDeveloppeur(new Developpeur("montassar", 2600.0, new Date()));
-		developpeurService.saveDeveloppeur(new Developpeur("ali", 2800.0, new Date()));
+		developpeurService.saveDeveloppeur(new Developpeur("Mohamed", 2800.0, new Date()));
 		developpeurService.saveDeveloppeur(new Developpeur("salah", 900.0, new Date()));*/
 }
 }

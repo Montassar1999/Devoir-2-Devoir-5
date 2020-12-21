@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>15</java.version>
+		<start-class>com.montassar.DeveloppeursApplication</start-class>
 	</properties>
 
 	<dependencies>
